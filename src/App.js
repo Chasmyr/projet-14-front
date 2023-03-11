@@ -1,8 +1,15 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import CreateEmployee from "./pages/createEmployee/CreateEmployee";
+import EmployeeList from "./pages/employeeList/EmployeeList";
+
 function App() {
   return (
-    <div className="App">
-      <h1>Projet 14</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<CreateEmployee />} />
+        <Route path="/list" element={<EmployeeList />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
