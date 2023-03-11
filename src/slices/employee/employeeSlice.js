@@ -18,7 +18,6 @@ const employeeSlice = createSlice({
             } else {
                 let toReturn = [...state.employees]
                 toReturn.push(action.payload)
-                console.log(toReturn)
                 return {
                     ...state,
                     employees:

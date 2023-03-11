@@ -1,15 +1,26 @@
-import { Link } from "react-router-dom"
+import { connect } from "react-redux"
+import EmployeeTable from "../../components/employeeTable"
+import Header from "../../components/header"
+import './index.css'
 
-const EmployeeList = () => {
+const EmployeeList = ({employees = null}) => {
 
 
     return (
-        <div id="employee-div" className="container">
-            <h1>Current Employees</h1>
-            <table id="employee-table" className="display"></table>
-            <Link to="/">Home</Link>
-        </div>
+        <>
+            <Header />
+            <div id="employee-div" className="container-table">
+                <div className="content-table">
+                    <h1 className="table-title">Current Employees</h1>
+                    <EmployeeTable employees={employees} />
+                </div>
+            </div>
+        </>
     )
 }
 
-export default EmployeeList
+export default connect(
+    state => ({
+        employees: state.employeeReducer.employees
+    })
+)(EmployeeList)

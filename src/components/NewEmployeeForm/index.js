@@ -1,6 +1,7 @@
 import { useRef } from "react"
 import { states } from "../../data/states"
 import { setEmployees } from "../../slices/employee/employeeSlice"
+import './index.css'
 
 const NewEmployeeForm = ({dispatch}) => {
 
@@ -27,26 +28,36 @@ const NewEmployeeForm = ({dispatch}) => {
             zipCode: employeeZipCode.current.value
         }
 
-        console.log(employeeForm)
         dispatch(setEmployees(employeeForm))
     }
 
 
     return (
         <>
-            <form id="create-employee">
+            <form id="create-employee" className="form">
 
-                <label htmlFor="first-name">First Name</label>
-                <input type="text" id="first-name" ref={employeeFirstName} />
+                <div className="col-1">
+                    <label htmlFor="first-name">First Name</label>
+                    <input type="text" id="first-name" ref={employeeFirstName} />
 
-                <label htmlFor="last-name">Last Name</label>
-                <input type="text" id="last-name" ref={employeeLastName} />
+                    <label htmlFor="last-name">Last Name</label>
+                    <input type="text" id="last-name" ref={employeeLastName} />
 
-                <label htmlFor="date-of-birth">Date Of Birth</label>
-                <input type="date" id="date-of-birth" ref={employeeDateOfBirth} />
+                    <label htmlFor="date-of-birth">Date Of Birth</label>
+                    <input type="date" id="date-of-birth" ref={employeeDateOfBirth} />
 
-                <label htmlFor="start-date">Start Date</label>
-                <input type="date" id="start-date" ref={employeeStartDate} />
+                    <label htmlFor="start-date">Start Date</label>
+                    <input type="date" id="start-date" ref={employeeStartDate} />
+
+                    <label htmlFor="department">Department</label>
+                    <select name="department" id="department" ref={employeeDepartement} >
+                        <option>Sales</option>
+                        <option>Marketing</option>
+                        <option>Engineering</option>
+                        <option>Human Resources</option>
+                        <option>Legal</option>
+                    </select>
+                </div>
 
                 <fieldset className="address">
 
@@ -62,7 +73,7 @@ const NewEmployeeForm = ({dispatch}) => {
                     <select name="state" id="state" ref={employeeState}>
                         {states.map((state, index) => {
                             return (
-                                <option key={index}>{state.name}</option>
+                                <option key={index} value={state.abbreviation}>{state.name}</option>
                             )
                         })}
                     </select>
@@ -72,18 +83,9 @@ const NewEmployeeForm = ({dispatch}) => {
 
                 </fieldset>
 
-                <label htmlFor="department">Department</label>
-                <select name="department" id="department" ref={employeeDepartement} >
-                    <option>Sales</option>
-                    <option>Marketing</option>
-                    <option>Engineering</option>
-                    <option>Human Resources</option>
-                    <option>Legal</option>
-                </select>
-
             </form>
 
-            <button onClick={saveForm}>Save</button>
+            <button onClick={saveForm} className="save-btn">Save</button>
         
         </>
     )
