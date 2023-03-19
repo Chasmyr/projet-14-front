@@ -1,21 +1,5 @@
-.header-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #a6a598;
-    box-shadow: 0px 6px 18px -5px rgba(0,0,0,0.28);
-}
-.header-title {
-    margin-left: 5%;
-    color: #fffde9;
-}
-.header-nav {
-    width: 40%;
-    display: flex;
-    justify-content: space-around;
-}
-.header-nav a {
+a {
     color: #fffde9;
     font-size: 20px;
+    text-decoration: none;
 }

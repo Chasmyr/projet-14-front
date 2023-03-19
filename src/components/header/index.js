@@ -1,16 +1,23 @@
+import { AppBar, Box, Toolbar, Typography } from "@mui/material"
 import { Link } from "react-router-dom"
 import './index.css'
 
 const Header = () => {
 
     return (
-        <div className="header-wrapper">
-            <h1 className="header-title">HRnet</h1>
-            <div className="header-nav">
-                <Link to="/">Home</Link>
-                <Link to="/list">Employee List</Link>
-            </div>
-        </div>
+        <Box sx={{ mb: 15 }}>
+            <AppBar>
+                <Toolbar sx={{ display: 'flex', m: 1 }}>
+                    <Typography variant="h1" sx={{ fontSize: '48px' }}>
+                        HRnet
+                    </Typography>
+                    <Box sx={{ width: '250px', display: 'flex', justifyContent: 'space-between', ml: 8 }}>
+                        <Link to="/">Home</Link>
+                        <Link to="/list">Employee List</Link>
+                    </Box>
+                </Toolbar>
+            </AppBar>
+        </Box>
     )
 }
 

@@ -1,7 +1,7 @@
+import { Box, Typography } from "@mui/material"
 import { connect } from "react-redux"
 import EmployeeTable from "../../components/employeeTable"
 import Header from "../../components/header"
-import './index.css'
 
 const EmployeeList = ({employees = null}) => {
 
@@ -9,12 +9,14 @@ const EmployeeList = ({employees = null}) => {
     return (
         <>
             <Header />
-            <div id="employee-div" className="container-table">
-                <div className="content-table">
-                    <h1 className="table-title">Current Employees</h1>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '3%' }}>
+                <Box sx={{ width: '95%', display: 'flex', alignItems: 'center', flexDirection: 'column', borderRadius: '15px', boxShadow: 3 }}>
+                    <Typography variant="h2" sx={{ m:0, mt: '15px', fontSize: '24px', mb: '15px', textDecoration: 'underline' }}>
+                        Current Employees
+                    </Typography>
                     <EmployeeTable employees={employees} />
-                </div>
-            </div>
+                </Box>
+            </Box>
         </>
     )
 }

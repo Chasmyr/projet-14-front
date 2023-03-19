@@ -1,20 +1,22 @@
+import { Box, Typography } from "@mui/material"
 import { connect } from "react-redux"
 import Header from "../../components/header"
 import NewEmployeeForm from "../../components/NewEmployeeForm"
-import './index.css'
 
 const CreateEmployee = ({dispatch}) => {
 
     return (
         <>
             <Header />
-            <div className="content-wrapper">
-                <div className="container">
-                    <h2 className="form-title">Create Employee</h2>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '3%' }}> 
+                <Box sx={{ display: 'flex', flexDirection: 'column', width: '50%', alignItems: 'center', 
+                        justifyContent: 'center', borderRadius: '15px', boxShadow: 3 }}>
+                    <Typography variant="h2" sx={{ m: 0, textDecoration: 'underline', mt: '15px', fontSize: '24px' }}>
+                        Create Employee
+                    </Typography>
                     <NewEmployeeForm dispatch={dispatch} />
-                </div>
-                <div className="modal" id="confirmation">Employee Created!</div>
-            </div>
+                </Box>
+            </Box>
         </>  
     )
 }
