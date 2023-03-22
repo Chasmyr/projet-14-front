@@ -27,7 +27,7 @@ const EmployeeTable = ({employees}) => {
                                 <td>{employee.startDate}</td>
                                 <td>{employee.departement}</td>
                                 <td>{employee.dateOfBirth}</td>
-                                <td>{employee.street}</td>
+                                <td>{employee.addressStreet}</td>
                                 <td>{employee.city}</td>
                                 <td>{employee.state}</td>
                                 <td>{employee.zipCode}</td>

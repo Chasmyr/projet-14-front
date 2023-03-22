@@ -11,8 +11,8 @@ const Header = () => {
                     <Typography variant="h1" sx={{ fontSize: '48px' }}>
                         HRnet
                     </Typography>
-                    <Box sx={{ width: '250px', display: 'flex', justifyContent: 'space-between', ml: 8 }}>
-                        <Link to="/">Home</Link>
+                    <Box sx={{ width: '350px', display: 'flex', justifyContent: 'space-between', ml: 8 }}>
+                        <Link to="/">Add Employee</Link>
                         <Link to="/list">Employee List</Link>
                     </Box>
                 </Toolbar>

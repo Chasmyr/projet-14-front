@@ -1,92 +1,87 @@
-import { useRef } from "react"
-import { states } from "../../data/states"
+import { Box, Button, Modal, Step, StepLabel, Stepper, Typography } from "@mui/material"
+import { useState } from "react"
 import { setEmployees } from "../../slices/employee/employeeSlice"
-import './index.css'
+import Address from "../adress"
+import PersonnalInfo from "../personalInfo"
 
 const NewEmployeeForm = ({dispatch}) => {
 
-    const employeeFirstName = useRef(null)
-    const employeeLastName = useRef(null)
-    const employeeDateOfBirth = useRef(null)
-    const employeeStartDate = useRef(null)
-    const employeeStreet = useRef(null)
-    const employeeCity = useRef(null)
-    const employeeState = useRef(null)
-    const employeeZipCode = useRef(null)
-    const employeeDepartement = useRef(null)
+    const [activeStep, setActiveStep] = useState(0)
+    const [newEmployee, setNewEmployee] = useState({})
+    const [openModal, setOpenModal] = useState(false)
 
-    const saveForm = () => {
-        let employeeForm = {
-            firstName: employeeFirstName.current.value,
-            lastName: employeeLastName.current.value,
-            dateOfBirth: employeeDateOfBirth.current.value,
-            startDate: employeeStartDate.current.value,
-            departement: employeeDepartement.current.value,
-            street: employeeStreet.current.value,
-            city: employeeCity.current.value,
-            state: employeeState.current.value,
-            zipCode: employeeZipCode.current.value
+    const steps = [
+        'Employee Informations',
+        'Employee Address'
+    ];
+
+    const getStepContent = (step) => {
+        switch (step) {
+            case 0:
+                return <PersonnalInfo newEmployee={newEmployee} setNewEmployee={setNewEmployee} />
+            case 1:
+                return <Address newEmployee={newEmployee} setNewEmployee={setNewEmployee} />
+            default:
+                throw new Error('Unknow step')
         }
-
-        dispatch(setEmployees(employeeForm))
     }
 
+    const nextStep = () => {
+        setActiveStep(activeStep +1)
+    }
+
+    const prevStep = () => {
+        setActiveStep(activeStep -1)
+    }
+
+    const handleSubmit = () => {
+        dispatch(setEmployees(newEmployee))
+        setOpenModal(true)
+        setActiveStep(0)
+    }
 
     return (
-        <>
-            <form id="create-employee" className="form">
-
-                <div className="col-1">
-                    <label htmlFor="first-name">First Name</label>
-                    <input type="text" id="first-name" ref={employeeFirstName} />
-
-                    <label htmlFor="last-name">Last Name</label>
-                    <input type="text" id="last-name" ref={employeeLastName} />
-
-                    <label htmlFor="date-of-birth">Date Of Birth</label>
-                    <input type="date" id="date-of-birth" ref={employeeDateOfBirth} />
-
-                    <label htmlFor="start-date">Start Date</label>
-                    <input type="date" id="start-date" ref={employeeStartDate} />
-
-                    <label htmlFor="department">Department</label>
-                    <select name="department" id="department" ref={employeeDepartement} >
-                        <option>Sales</option>
-                        <option>Marketing</option>
-                        <option>Engineering</option>
-                        <option>Human Resources</option>
-                        <option>Legal</option>
-                    </select>
-                </div>
-
-                <fieldset className="address">
-
-                    <legend>Address</legend>
-
-                    <label htmlFor="street">Street</label>
-                    <input type="text" id="street" ref={employeeStreet} />
-
-                    <label htmlFor="city">City</label>
-                    <input type="text" id="city" ref={employeeCity} />
-                    
-                    <label htmlFor="state">State</label>
-                    <select name="state" id="state" ref={employeeState}>
-                        {states.map((state, index) => {
-                            return (
-                                <option key={index} value={state.abbreviation}>{state.name}</option>
-                            )
-                        })}
-                    </select>
-
-                    <label htmlFor="zip-code">Zip Code</label>
-                    <input type="number" id="zip-code" ref={employeeZipCode} />
-
-                </fieldset>
-
-            </form>
-
-            <button onClick={saveForm} className="save-btn">Save</button>
-        
+        <>  
+            <Modal
+                open={openModal}
+                onClose={() => {setOpenModal(false)}}
+                sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            >   
+                <Box sx={{ backgroundColor: 'white', width: '250px', height: '120px', borderRadius: '10px', boxShadow: 3,
+                    display:'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Typography variant="h6">
+                        Employee Created !
+                    </Typography>
+                </Box>
+            </Modal>
+            <Box>
+                <Stepper sx={{ mt: 3, mb: 3, ml: 4, mr: 4 }} activeStep={activeStep}>
+                    {steps.map((label) => {
+                        return(
+                            <Step key={label}>
+                                <StepLabel>{label}</StepLabel>
+                            </Step>
+                        )
+                    })}
+                </Stepper>
+                {getStepContent(activeStep)}
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', pr: 4, mb: 2 }}>
+                    {activeStep !== 0 ?
+                        <>
+                            <Button variant="contained" onClick={prevStep} color="inherit" sx={{ mr: 3 }}>
+                                Back
+                            </Button>
+                            <Button variant="contained" onClick={handleSubmit}>
+                                Save
+                            </Button>
+                        </>
+                    :
+                        <Button variant="contained" onClick={nextStep}>
+                            Next
+                        </Button>
+                    }
+                </Box>
+            </Box>
         </>
     )
 }
