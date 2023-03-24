@@ -45,21 +45,41 @@ const PersonnalInfo = ({newEmployee, setNewEmployee}) => {
 
     const handleDateOfBirth = (e) => {
         let cloneEmployee = newEmployee
+        let day = ''
+        let month = ''
+        let year = e.$y
         if(e.$D < 10) {
-            cloneEmployee['dateOfBirth'] = '0' + e.$D + '/' + (e.$M +1) + '/' + e.$y
+            day = '0' + e.$D
         } else {
-            cloneEmployee['dateOfBirth'] = e.$D + '/' + (e.$M +1) + '/' + e.$y
+            day = e.$D
         }
+        if(e.$M < 9) {
+            month = '0' + (e.$M +1)
+        } else {
+            month = (e.$M +1)
+        }
+        let dateOfBirth = day + '/' + month + '/' + year
+        cloneEmployee['dateOfBirth'] = dateOfBirth
         setNewEmployee(cloneEmployee)
     }
 
     const handleStartDate = (e) => {
         let cloneEmployee = newEmployee
+        let day = ''
+        let month = ''
+        let year = e.$y
         if(e.$D < 10) {
-            cloneEmployee['startDate'] = '0' + e.$D + '/' + (e.$M +1) + '/' + e.$y
+            day = '0' + e.$D
         } else {
-            cloneEmployee['startDate'] = e.$D + '/' + (e.$M +1) + '/' + e.$y
+            day = e.$D
         }
+        if(e.$M < 9) {
+            month = '0' + (e.$M +1)
+        } else {
+            month = (e.$M +1)
+        }
+        let startDate = day + '/' + month + '/' + year
+        cloneEmployee['startDate'] = startDate
         setNewEmployee(cloneEmployee)
     }
 

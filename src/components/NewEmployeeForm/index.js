@@ -37,6 +37,7 @@ const NewEmployeeForm = ({dispatch}) => {
     const handleSubmit = () => {
         dispatch(setEmployees(newEmployee))
         setOpenModal(true)
+        setNewEmployee({})
         setActiveStep(0)
     }
 

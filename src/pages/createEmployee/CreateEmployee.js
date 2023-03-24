@@ -3,7 +3,9 @@ import { connect } from "react-redux"
 import Header from "../../components/header"
 import NewEmployeeForm from "../../components/NewEmployeeForm"
 
-const CreateEmployee = ({dispatch}) => {
+const CreateEmployee = ({dispatch, employees = null}) => {
+
+    console.log(employees)
 
     return (
         <>
@@ -28,6 +30,6 @@ const CreateEmployee = ({dispatch}) => {
 
 export default connect(
     state => ({
-        
+        employees: state.employeeReducer.employees
     })
 )(CreateEmployee)
