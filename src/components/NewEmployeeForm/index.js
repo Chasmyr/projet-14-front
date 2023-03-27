@@ -1,4 +1,4 @@
-import { Box, Button, Modal, Step, StepLabel, Stepper, Typography } from "@mui/material"
+import {Alert, Box, Button, Modal, Step, StepLabel, Stepper, Typography} from "@mui/material"
 import { useState } from "react"
 import { setEmployees } from "../../slices/employee/employeeSlice"
 import Address from "../adress"
@@ -9,20 +9,31 @@ const NewEmployeeForm = ({dispatch}) => {
     const [activeStep, setActiveStep] = useState(0)
     const [newEmployee, setNewEmployee] = useState({})
     const [openModal, setOpenModal] = useState(false)
+    const [formError, setFormError] = useState([])
 
     const steps = [
         'Employee Informations',
         'Employee Address'
-    ];
+    ]
 
-    const getStepContent = (step) => {
-        switch (step) {
-            case 0:
-                return <PersonnalInfo newEmployee={newEmployee} setNewEmployee={setNewEmployee} />
-            case 1:
-                return <Address newEmployee={newEmployee} setNewEmployee={setNewEmployee} />
-            default:
-                throw new Error('Unknow step')
+    const toCheck = ['addressStreet', 'city', 'dateOfBirth', 'zipCode', 'departement', 'firstName', 'lastName', 'startDate']
+
+    const handleSubmit = () => {
+        if(newEmployee.addressStreet && newEmployee.city && newEmployee.dateOfBirth && newEmployee.zipCode &&
+            newEmployee.departement && newEmployee.firstName && newEmployee.lastName && newEmployee.startDate) {
+            setFormError([])
+            dispatch(setEmployees(newEmployee))
+            setOpenModal(true)
+            setNewEmployee({})
+            setActiveStep(0)
+        } else {
+            let errorCount = []
+            toCheck.map((checker) => {
+                if(!newEmployee[checker]) {
+                    errorCount.push(checker)
+                }
+            })
+            setFormError(errorCount)
         }
     }
 
@@ -34,11 +45,15 @@ const NewEmployeeForm = ({dispatch}) => {
         setActiveStep(activeStep -1)
     }
 
-    const handleSubmit = () => {
-        dispatch(setEmployees(newEmployee))
-        setOpenModal(true)
-        setNewEmployee({})
-        setActiveStep(0)
+    const getStepContent = (step) => {
+        switch (step) {
+            case 0:
+                return <PersonnalInfo newEmployee={newEmployee} setNewEmployee={setNewEmployee} />
+            case 1:
+                return <Address newEmployee={newEmployee} setNewEmployee={setNewEmployee} />
+            default:
+                throw new Error('Unknow step')
+        }
     }
 
     return (
@@ -65,6 +80,10 @@ const NewEmployeeForm = ({dispatch}) => {
                         )
                     })}
                 </Stepper>
+                {formError.length > 0 &&
+                    <Alert severity="error" sx={{m: 1, mb: 2}} onClose={() => {setFormError([])}}>
+                        Some required fields are not filled : {formError.map((e) => <strong key={e}>{e} </strong>)}!
+                    </Alert>}
                 {getStepContent(activeStep)}
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', pr: 4, mb: 2 }}>
                     {activeStep !== 0 ?

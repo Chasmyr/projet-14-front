@@ -6,6 +6,7 @@ import { useState } from "react"
 const PersonnalInfo = ({newEmployee, setNewEmployee}) => {
 
     const [departement, setDepartement] = useState('Sales')
+    const [firstNameValue, setFirstNameValue] = useState('')
 
     const selectData = [
         {
@@ -37,9 +38,16 @@ const PersonnalInfo = ({newEmployee, setNewEmployee}) => {
         setNewEmployee(cloneEmployee)
     }
 
-    const handleInputChange = (e) => {
+    const handleLastNameChange = (e) => {
         let cloneEmployee = newEmployee
-        cloneEmployee[e.target.id] = e.target.value
+        cloneEmployee['lastName'] = e.target.value
+        setNewEmployee(cloneEmployee)
+    }
+
+    const handleFirstNameChange = (e) => {
+        setFirstNameValue(e.target.value)
+        let cloneEmployee = newEmployee
+        cloneEmployee['firstName'] = e.target.value
         setNewEmployee(cloneEmployee)
     }
 
@@ -78,7 +86,7 @@ const PersonnalInfo = ({newEmployee, setNewEmployee}) => {
         } else {
             month = (e.$M +1)
         }
-        let startDate = day + '/' + month + '/' + year
+        let startDate = month + '/' + day + '/' + year
         cloneEmployee['startDate'] = startDate
         setNewEmployee(cloneEmployee)
     }
@@ -95,8 +103,9 @@ const PersonnalInfo = ({newEmployee, setNewEmployee}) => {
                         id="firstName"
                         name="firstName"
                         label="First Name"
+                        value={firstNameValue}
                         fullWidth
-                        onChange={handleInputChange}
+                        onChange={handleFirstNameChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -106,14 +115,14 @@ const PersonnalInfo = ({newEmployee, setNewEmployee}) => {
                         name="lastName"
                         label="Last Name"
                         fullWidth
-                        onChange={handleInputChange}
+                        onChange={handleLastNameChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker 
                             label="Date Of Birth"
-                            format="DD/MM/YYYY"
+                            format="MM/DD/YYYY"
                             sx={{ width: '100%' }}
                             onChange={handleDateOfBirth}
                         />
@@ -123,7 +132,7 @@ const PersonnalInfo = ({newEmployee, setNewEmployee}) => {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker 
                             label="Start Date"
-                            format="DD/MM/YYYY"
+                            format="MM/DD/YYYY"
                             sx={{ width: '100%' }}
                             onChange={handleStartDate}
                         />
