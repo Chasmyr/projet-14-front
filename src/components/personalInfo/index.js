@@ -1,12 +1,26 @@
 import { Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { useState } from "react"
+import {useEffect, useState} from "react"
+import {setFirstName, setLastName} from "../../slices/form/formSlice";
 
-const PersonnalInfo = ({newEmployee, setNewEmployee}) => {
+const PersonnalInfo = ({newEmployee, setNewEmployee, dispatch, form}) => {
 
-    const [departement, setDepartement] = useState('Sales')
-    const [firstNameValue, setFirstNameValue] = useState('')
+    const [departement, setDepartement] = useState("")
+    const [firstNameValue, setFirstNameValue] = useState("")
+    const [lastNameValue, setLastNameValue] = useState("")
+
+    useEffect(() => {
+        if(form.firstName !== null) {
+            setFirstNameValue(form.firstName)
+        }
+        if(form.lastName !== null) {
+            setLastNameValue(form.lastName)
+        }
+        if(form.departement !== null) {
+            setDepartement(form.departement)
+        }
+    }, [])
 
     const selectData = [
         {
@@ -39,9 +53,11 @@ const PersonnalInfo = ({newEmployee, setNewEmployee}) => {
     }
 
     const handleLastNameChange = (e) => {
+        setLastNameValue(e.target.value)
         let cloneEmployee = newEmployee
         cloneEmployee['lastName'] = e.target.value
         setNewEmployee(cloneEmployee)
+        dispatch(setLastName(e.target.value))
     }
 
     const handleFirstNameChange = (e) => {
@@ -49,6 +65,7 @@ const PersonnalInfo = ({newEmployee, setNewEmployee}) => {
         let cloneEmployee = newEmployee
         cloneEmployee['firstName'] = e.target.value
         setNewEmployee(cloneEmployee)
+        dispatch(setFirstName(e.target.value))
     }
 
     const handleDateOfBirth = (e) => {
@@ -66,7 +83,7 @@ const PersonnalInfo = ({newEmployee, setNewEmployee}) => {
         } else {
             month = (e.$M +1)
         }
-        let dateOfBirth = day + '/' + month + '/' + year
+        let dateOfBirth = month + '/' + day + '/' + year
         cloneEmployee['dateOfBirth'] = dateOfBirth
         setNewEmployee(cloneEmployee)
     }
@@ -114,6 +131,7 @@ const PersonnalInfo = ({newEmployee, setNewEmployee}) => {
                         id="lastName"
                         name="lastName"
                         label="Last Name"
+                        value={lastNameValue}
                         fullWidth
                         onChange={handleLastNameChange}
                     />

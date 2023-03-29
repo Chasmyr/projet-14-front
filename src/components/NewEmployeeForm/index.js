@@ -3,8 +3,9 @@ import { useState } from "react"
 import { setEmployees } from "../../slices/employee/employeeSlice"
 import Address from "../adress"
 import PersonnalInfo from "../personalInfo"
+import {resetForm} from "../../slices/form/formSlice";
 
-const NewEmployeeForm = ({dispatch}) => {
+const NewEmployeeForm = ({dispatch, form}) => {
 
     const [activeStep, setActiveStep] = useState(0)
     const [newEmployee, setNewEmployee] = useState({})
@@ -23,6 +24,7 @@ const NewEmployeeForm = ({dispatch}) => {
             newEmployee.departement && newEmployee.firstName && newEmployee.lastName && newEmployee.startDate) {
             setFormError([])
             dispatch(setEmployees(newEmployee))
+            dispatch(resetForm())
             setOpenModal(true)
             setNewEmployee({})
             setActiveStep(0)
@@ -48,7 +50,7 @@ const NewEmployeeForm = ({dispatch}) => {
     const getStepContent = (step) => {
         switch (step) {
             case 0:
-                return <PersonnalInfo newEmployee={newEmployee} setNewEmployee={setNewEmployee} />
+                return <PersonnalInfo newEmployee={newEmployee} setNewEmployee={setNewEmployee} dispatch={dispatch} form={form} />
             case 1:
                 return <Address newEmployee={newEmployee} setNewEmployee={setNewEmployee} />
             default:
@@ -81,7 +83,7 @@ const NewEmployeeForm = ({dispatch}) => {
                     })}
                 </Stepper>
                 {formError.length > 0 &&
-                    <Alert severity="error" sx={{m: 1, mb: 2}} onClose={() => {setFormError([])}}>
+                    <Alert severity="error" sx={{mt: 1, mb: 2, ml: 4, mr:4}} onClose={() => {setFormError([])}}>
                         Some required fields are not filled : {formError.map((e) => <strong key={e}>{e} </strong>)}!
                     </Alert>}
                 {getStepContent(activeStep)}

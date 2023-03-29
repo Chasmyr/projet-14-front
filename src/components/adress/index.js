@@ -4,7 +4,7 @@ import { states } from '../../data/states'
 
 const Address = ({newEmployee, setNewEmployee}) => {
 
-    const [state, setState] = useState('AL')
+    const [state, setState] = useState('')
 
     const handleSelectChange = (e) => {
         setState(e.target.value)

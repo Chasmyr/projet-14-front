@@ -3,9 +3,7 @@ import { connect } from "react-redux"
 import Header from "../../components/header"
 import NewEmployeeForm from "../../components/NewEmployeeForm"
 
-const CreateEmployee = ({dispatch, employees = null}) => {
-
-    console.log(employees)
+const CreateEmployee = ({dispatch, employees = null, form = null}) => {
 
     return (
         <>
@@ -19,7 +17,7 @@ const CreateEmployee = ({dispatch, employees = null}) => {
                             </Typography>
                         </Grid>
                         <Grid item xs={12}>
-                            <NewEmployeeForm dispatch={dispatch} />
+                            <NewEmployeeForm dispatch={dispatch} form={form} />
                         </Grid>
                     </Grid>
                 </Box>
@@ -30,6 +28,7 @@ const CreateEmployee = ({dispatch, employees = null}) => {
 
 export default connect(
     state => ({
-        employees: state.employeeReducer.employees
+        employees: state.employeeReducer.employees,
+        form: state.formReducer.form
     })
 )(CreateEmployee)

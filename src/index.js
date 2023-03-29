@@ -4,11 +4,13 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './styles/global.css'
 import {reducer as employeeReducer} from './slices/employee/employeeSlice'
+import {reducer as formReducer} from './slices/form/formSlice'
 import { Provider } from 'react-redux';
 
 export const store = configureStore({
   reducer: {
-    employeeReducer
+      employeeReducer,
+      formReducer
   }
 })
 
