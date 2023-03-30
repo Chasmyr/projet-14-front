@@ -3,11 +3,9 @@ import { useState } from "react"
 import { setEmployees } from "../../slices/employee/employeeSlice"
 import Address from "../adress"
 import PersonnalInfo from "../personalInfo"
-import {resetForm} from "../../slices/form/formSlice";
 
-const NewEmployeeForm = ({dispatch, form}) => {
+const NewEmployeeForm = ({dispatch}) => {
 
-    const [activeStep, setActiveStep] = useState(0)
     const [newEmployee, setNewEmployee] = useState({})
     const [openModal, setOpenModal] = useState(false)
     const [formError, setFormError] = useState([])
@@ -17,44 +15,24 @@ const NewEmployeeForm = ({dispatch, form}) => {
         'Employee Address'
     ]
 
-    const toCheck = ['addressStreet', 'city', 'dateOfBirth', 'zipCode', 'departement', 'firstName', 'lastName', 'startDate']
+    const toCheck = ['addressStreet', 'city', 'dateOfBirth', 'zipCode', 'departement', 'firstName', 'lastName', 'startDate', 'state']
 
     const handleSubmit = () => {
-        if(newEmployee.addressStreet && newEmployee.city && newEmployee.dateOfBirth && newEmployee.zipCode &&
-            newEmployee.departement && newEmployee.firstName && newEmployee.lastName && newEmployee.startDate) {
+        if(newEmployee.addressStreet !== undefined && newEmployee.city !== undefined && newEmployee.dateOfBirth !== undefined && newEmployee.zipCode !== undefined &&
+            newEmployee.departement !== undefined && newEmployee.firstName !== undefined && newEmployee.lastName !== undefined && newEmployee.startDate !== undefined) {
             setFormError([])
             dispatch(setEmployees(newEmployee))
-            dispatch(resetForm())
             setOpenModal(true)
             setNewEmployee({})
-            setActiveStep(0)
         } else {
             let errorCount = []
             toCheck.map((checker) => {
-                if(!newEmployee[checker]) {
+                if(newEmployee[checker] === undefined) {
                     errorCount.push(checker)
                 }
             })
+            window.scrollTo(0, 0)
             setFormError(errorCount)
-        }
-    }
-
-    const nextStep = () => {
-        setActiveStep(activeStep +1)
-    }
-
-    const prevStep = () => {
-        setActiveStep(activeStep -1)
-    }
-
-    const getStepContent = (step) => {
-        switch (step) {
-            case 0:
-                return <PersonnalInfo newEmployee={newEmployee} setNewEmployee={setNewEmployee} dispatch={dispatch} form={form} />
-            case 1:
-                return <Address newEmployee={newEmployee} setNewEmployee={setNewEmployee} />
-            default:
-                throw new Error('Unknow step')
         }
     }
 
@@ -73,35 +51,16 @@ const NewEmployeeForm = ({dispatch, form}) => {
                 </Box>
             </Modal>
             <Box>
-                <Stepper sx={{ mt: 3, mb: 3, ml: 4, mr: 4 }} activeStep={activeStep}>
-                    {steps.map((label) => {
-                        return(
-                            <Step key={label}>
-                                <StepLabel>{label}</StepLabel>
-                            </Step>
-                        )
-                    })}
-                </Stepper>
                 {formError.length > 0 &&
                     <Alert severity="error" sx={{mt: 1, mb: 2, ml: 4, mr:4}} onClose={() => {setFormError([])}}>
                         Some required fields are not filled : {formError.map((e) => <strong key={e}>{e} </strong>)}!
                     </Alert>}
-                {getStepContent(activeStep)}
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end', pr: 4, mb: 2 }}>
-                    {activeStep !== 0 ?
-                        <>
-                            <Button variant="contained" onClick={prevStep} color="inherit" sx={{ mr: 3 }}>
-                                Back
-                            </Button>
-                            <Button variant="contained" onClick={handleSubmit}>
-                                Save
-                            </Button>
-                        </>
-                    :
-                        <Button variant="contained" onClick={nextStep}>
-                            Next
-                        </Button>
-                    }
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2, flexDirection: 'column', alignItems: 'center' }}>
+                    <PersonnalInfo newEmployee={newEmployee} setNewEmployee={setNewEmployee} />
+                    <Address newEmployee={newEmployee} setNewEmployee={setNewEmployee} />
+                    <Button variant="contained" onClick={handleSubmit}>
+                        Save
+                    </Button>
                 </Box>
             </Box>
         </>

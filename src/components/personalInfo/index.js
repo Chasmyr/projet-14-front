@@ -1,26 +1,11 @@
 import { Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import {useEffect, useState} from "react"
-import {setFirstName, setLastName} from "../../slices/form/formSlice";
+import {useState} from "react";
 
-const PersonnalInfo = ({newEmployee, setNewEmployee, dispatch, form}) => {
+const PersonnalInfo = ({newEmployee, setNewEmployee}) => {
 
     const [departement, setDepartement] = useState("")
-    const [firstNameValue, setFirstNameValue] = useState("")
-    const [lastNameValue, setLastNameValue] = useState("")
-
-    useEffect(() => {
-        if(form.firstName !== null) {
-            setFirstNameValue(form.firstName)
-        }
-        if(form.lastName !== null) {
-            setLastNameValue(form.lastName)
-        }
-        if(form.departement !== null) {
-            setDepartement(form.departement)
-        }
-    }, [])
 
     const selectData = [
         {
@@ -53,19 +38,15 @@ const PersonnalInfo = ({newEmployee, setNewEmployee, dispatch, form}) => {
     }
 
     const handleLastNameChange = (e) => {
-        setLastNameValue(e.target.value)
         let cloneEmployee = newEmployee
         cloneEmployee['lastName'] = e.target.value
         setNewEmployee(cloneEmployee)
-        dispatch(setLastName(e.target.value))
     }
 
     const handleFirstNameChange = (e) => {
-        setFirstNameValue(e.target.value)
         let cloneEmployee = newEmployee
         cloneEmployee['firstName'] = e.target.value
         setNewEmployee(cloneEmployee)
-        dispatch(setFirstName(e.target.value))
     }
 
     const handleDateOfBirth = (e) => {
@@ -110,7 +91,7 @@ const PersonnalInfo = ({newEmployee, setNewEmployee, dispatch, form}) => {
 
     return (
         <>
-            <Typography variant="h6" gutterBottom sx={{ pl: 4 }}>
+            <Typography variant="h6" gutterBottom>
                 Employee Informations
             </Typography>
             <Grid container spacing={3} sx={{ p: 4, pt: 2, pb: 3 }}>
@@ -120,7 +101,6 @@ const PersonnalInfo = ({newEmployee, setNewEmployee, dispatch, form}) => {
                         id="firstName"
                         name="firstName"
                         label="First Name"
-                        value={firstNameValue}
                         fullWidth
                         onChange={handleFirstNameChange}
                     />
@@ -131,7 +111,6 @@ const PersonnalInfo = ({newEmployee, setNewEmployee, dispatch, form}) => {
                         id="lastName"
                         name="lastName"
                         label="Last Name"
-                        value={lastNameValue}
                         fullWidth
                         onChange={handleLastNameChange}
                     />

@@ -4,10 +4,10 @@ import { states } from '../../data/states'
 
 const Address = ({newEmployee, setNewEmployee}) => {
 
-    const [state, setState] = useState('')
+    const [selectState, setSelectState] = useState("")
 
     const handleSelectChange = (e) => {
-        setState(e.target.value)
+        setSelectState(e.target.value)
         let cloneEmployee = newEmployee
         cloneEmployee['state'] = e.target.value
         setNewEmployee(cloneEmployee)
@@ -21,7 +21,7 @@ const Address = ({newEmployee, setNewEmployee}) => {
 
     return (
         <>
-            <Typography variant="h6" gutterBottom sx={{ pl: 4 }}>
+            <Typography variant="h6" gutterBottom>
                 Employee Adress
             </Typography>
             <Grid container spacing={3} sx={{ p: 4, pt: 2, pb: 3 }}>
@@ -59,7 +59,7 @@ const Address = ({newEmployee, setNewEmployee}) => {
                     <InputLabel id="select-state">State</InputLabel>
                     <Select
                         labelId="select-state"
-                        value={state}
+                        value={selectState}
                         onChange={handleSelectChange}
                         fullWidth
                     >

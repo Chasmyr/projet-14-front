@@ -8,10 +8,10 @@ const Header = () => {
         <Box sx={{ mb: 15 }}>
             <AppBar>
                 <Toolbar sx={{ display: 'flex', m: 1 }}>
-                    <Typography variant="h1" sx={{ fontSize: '48px' }}>
+                    <Typography variant="h1" sx={{ fontSize: {xs: '38px', md:'48px'} }}>
                         HRnet
                     </Typography>
-                    <Box sx={{ width: '350px', display: 'flex', justifyContent: 'space-between', ml: 8 }}>
+                    <Box sx={{ width: {xs:'200px', sm: '300px', md:'350px'}, display: 'flex', justifyContent: 'space-between', ml: {xs: 4, sm: 6, md: 8} }}>
                         <Link to="/">Add Employee</Link>
                         <Link to="/list">Employee List</Link>
                     </Box>
