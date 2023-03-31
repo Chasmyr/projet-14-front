@@ -1,4 +1,4 @@
-import {Alert, Box, Button, Modal, Step, StepLabel, Stepper, Typography} from "@mui/material"
+import {Alert, Box, Button, Modal, Typography} from "@mui/material"
 import { useState } from "react"
 import { setEmployees } from "../../slices/employee/employeeSlice"
 import Address from "../adress"
@@ -9,11 +9,6 @@ const NewEmployeeForm = ({dispatch}) => {
     const [newEmployee, setNewEmployee] = useState({})
     const [openModal, setOpenModal] = useState(false)
     const [formError, setFormError] = useState([])
-
-    const steps = [
-        'Employee Informations',
-        'Employee Address'
-    ]
 
     const toCheck = ['addressStreet', 'city', 'dateOfBirth', 'zipCode', 'departement', 'firstName', 'lastName', 'startDate', 'state']
 
@@ -28,8 +23,9 @@ const NewEmployeeForm = ({dispatch}) => {
             let errorCount = []
             toCheck.map((checker) => {
                 if(newEmployee[checker] === undefined) {
-                    errorCount.push(checker)
+                    return errorCount.push(checker)
                 }
+                return false
             })
             window.scrollTo(0, 0)
             setFormError(errorCount)

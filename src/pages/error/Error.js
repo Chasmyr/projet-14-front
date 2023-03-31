@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material"
-import EmployeeTable from "../../components/employeeTable"
 import Header from "../../components/header"
 
 const Error = () => {
