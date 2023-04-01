@@ -61,11 +61,14 @@ const EmployeeList = ({employees = null}) => {
     useEffect(() => {
       if(toDisplay === null) {
         setToDisplay([])
-        tableConf.rows = []
-      } else {
-        tableConf.rows = [...toDisplay]
-      }
+      } 
     }, [toDisplay])
+
+    if(toDisplay === null) {
+      tableConf.rows = []
+    } else {
+      tableConf.rows = [...toDisplay]
+    }
 
     return (
         <>
