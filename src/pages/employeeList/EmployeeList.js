@@ -3,92 +3,69 @@ import { connect } from "react-redux"
 import Header from "../../components/header"
 import {default as DisplayTable} from "oc-table-module"
 import "../../../node_modules/oc-table-module/dist/style.css"
+import { useEffect } from "react"
+import { useState } from "react"
 
 const EmployeeList = ({employees = null}) => {
 
+    const [toDisplay, setToDisplay] = useState(employees)
+
     const tableConf = {
-        title: 'Current employee',
-        searchable: true,
-        pagination: true,
-        defaultNumberOfEntries: 2,
-        entriesOptions: [2, 4, 6, 8, 10],
-        columns: [
-          {
-            name: 'Name',
-            ref: 'name'
-          },
-          {
-            name: 'Hours',
-            ref: 'heure'
-          },
-          {
-            name: 'Age',
-            orderable: true,
-            ref: 'age'
-          },
-          {
-            name: 'Job',
-            ref: 'job'
-          },
-          {
-            name: 'Date of Birth',
-            orderable: true,
-            ref: 'dateOfBirth'
-          },
-          {
-            name: 'test',
-            orderable: false,
-            ref: 'test'
-          }
-        ],
-        rows: [
-          {
-              name: 'Emil',
-              age: 12,
-              job: 'charpentier',
-              dateOfBirth: '02/25/1980',
-              test: 'test',
-              test2: 'test2'
-          },
-          {
-              name: 'Filip',
-              age: 48,
-              job: 'electricien',
-              dateOfBirth: '11/02/2008'
-          },
-          {
-              name: 'Jean',
-              age: 19,
-              job: 'pécheur',
-              dateOfBirth: '04/28/1988'
-          },
-          {
-              name: 'Emil',
-              age: 17,
-              heure: '18h',
-              job: 'charpentier',
-              dateOfBirth: '02/25/1980'
-          },
-          {
-              name: 'Filip',
-              age: 6,
-              job: 'electricien',
-              dateOfBirth: '11/12/2008'
-          },
-          {
-              name: 'Jean',
-              age: 88,
-              job: 'pécheur',
-              dateOfBirth: '02/04/1988'
-          },
-          {
-              name: 'Jean',
-              age: 88,
-              job: 'pécheur',
-              dateOfBirth: '05/04/1988'
-          },
-        ] 
+      title: 'Current employee',
+      searchable: true,
+      pagination: true,
+      defaultNumberOfEntries: 2,
+      entriesOptions: [2, 4, 6, 8, 10],
+      columns: [
+        {
+          name: 'First Name',
+          orderable: true,
+          ref: 'firstName'
+        },
+        {
+          name: 'Last Name',
+          orderable: true,
+          ref: 'lastName'
+        },
+        {
+          name: 'Date of Birth',
+          orderable: true,
+          ref: 'dateOfBirth'
+        },
+        {
+          name: 'Start Date',
+          orderable: true,
+          ref: 'startDate'
+        },
+        {
+          name: 'City',
+          orderable: true,
+          ref: 'city'
+        },
+        {
+          name: 'State',
+          orderable: true,
+          ref: 'state'
+        },
+        {
+          name: 'Zip Code',
+          ref: 'zipCode'
+        },
+        {
+          name: 'Address',
+          ref: 'addressStreet'
+        }
+      ]
+    }
+
+    useEffect(() => {
+      if(toDisplay === null) {
+        setToDisplay([])
+        tableConf.rows = []
+      } else {
+        tableConf.rows = [...toDisplay]
       }
+    }, [toDisplay])
 
     return (
         <>

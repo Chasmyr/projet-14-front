@@ -17,7 +17,7 @@ const employeeSlice = createSlice({
                 }
             } else {
                 let toReturn = [...state.employees]
-                toReturn.push(action.payload)
+                toReturn.unshift(action.payload)
                 return {
                     ...state,
                     employees:
